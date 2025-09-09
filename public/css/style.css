@@ -1,0 +1,136 @@
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --background-color: #f8f9fa;
+    --text-color: #343a40;
+    --card-bg-color: #ffffff;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --transition-speed: 0.3s;
+}
+
+body {
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    background-color: var(--card-bg-color);
+    padding: 30px 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+h1, h2, h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.75em;
+}
+
+/* --- Buttons --- */
+.btn {
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+    transition: all var(--transition-speed) ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Forms --- */
+.form-container { max-width: 500px; }
+.form-group { margin-bottom: 20px; }
+label { display: block; margin-bottom: 8px; font-weight: 600; }
+input[type="datetime-local"], input[type="number"], input[type="password"], select {
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--border-radius);
+    border: 1px solid #ced4da;
+    box-sizing: border-box;
+    transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* --- Header & Nav --- */
+.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #e9ecef; }
+.header h1 { margin: 0; font-size: 1.8em; }
+.nav a { margin-left: 20px; text-decoration: none; color: var(--primary-color); font-weight: 600; transition: color var(--transition-speed); }
+.nav a:hover { color: #0056b3; }
+
+/* --- Summary Cards --- */
+.summary-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; margin-bottom: 40px; }
+.card {
+    background: var(--card-bg-color);
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+.card h3 { margin-top: 0; color: #555; }
+.card .reading { font-size: 2.2em; font-weight: 700; color: var(--primary-color); }
+
+/* --- Chart --- */
+.chart-container { width: 100%; max-width: 100%; margin: 20px auto 0; }
+
+/* --- Login Page --- */
+.login-container { max-width: 400px; margin: 80px auto; text-align: center; }
+.error { color: #dc3545; margin-bottom: 15px; }
+
+/* --- Messages --- */
+.success-message {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    padding: 15px;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+    .container { padding: 20px; }
+    .header { flex-direction: column; align-items: flex-start; }
+    .nav { margin-top: 15px; }
+    .nav a { margin-left: 0; margin-right: 15px; }
+}

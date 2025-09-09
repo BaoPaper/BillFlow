@@ -1,0 +1,42 @@
+{
+  "prices": {
+    "electricity_per_unit": 0.9,
+    "cold_water_per_unit": 5,
+    "hot_water_per_unit": 20
+  },
+  "settlement_day": 1,
+  "cold_water": [
+    {
+      "timestamp": "2025-09-08T12:00:00",
+      "reading": 9.9
+    }
+  ],
+  "hot_water": [
+    {
+      "timestamp": "2025-09-08T12:00:00",
+      "reading": 3.7
+    }
+  ],
+  "electricity": [
+    {
+      "timestamp": "2025-09-08T15:16:00",
+      "reading": 691.5
+    },
+    {
+      "timestamp": "2025-09-08T18:10:00",
+      "reading": 693
+    },
+    {
+      "timestamp": "2025-09-08T22:09:00",
+      "reading": 695.2
+    },
+    {
+      "timestamp": "2025-09-09T10:01:00",
+      "reading": 698.5
+    },
+    {
+      "timestamp": "2025-09-09T15:00",
+      "reading": 699.1
+    }
+  ]
+}

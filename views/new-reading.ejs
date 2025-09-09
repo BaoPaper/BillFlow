@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>录入新数据 - 水电用量记录</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .form-container { max-width: 500px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="datetime-local"], input[type="number"], select, .btn {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn-secondary { background-color: #6c757d; }
+    </style>
+</head>
+<body>
+    <div class="container form-container">
+        <h1>录入新数据</h1>
+        <form action="/new" method="post">
+            <div class="form-group">
+                <label for="type">读数类型</label>
+                <select id="type" name="type" required>
+                    <option value="electricity">电表</option>
+                    <option value="cold_water">冷水表</option>
+                    <option value="hot_water">热水表</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="reading">读数</label>
+                <input type="number" id="reading" name="reading" step="0.1" required placeholder="请输入表盘读数">
+            </div>
+            <div class="form-group">
+                <label for="timestamp">日期与时间</label>
+                <input type="datetime-local" id="timestamp" name="timestamp" required>
+            </div>
+            <button type="submit" class="btn">保存读数</button>
+            <a href="/" class="btn btn-secondary" style="text-align: center; margin-top: 10px;">返回主页</a>
+        </form>
+    </div>
+
+    <script>
+        // 自动填充当前日期和时间
+        document.addEventListener('DOMContentLoaded', function() {
+            const now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // 转换为本地时间
+            document.getElementById('timestamp').value = now.toISOString().slice(0, 16);
+        });
+    </script>
+</body>
+</html>

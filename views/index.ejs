@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- 引入 Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .header h1 { margin: 0; }
+        .nav a { margin-left: 15px; text-decoration: none; color: #007bff; }
+        .main-actions { text-align: center; margin-bottom: 30px; }
+        .btn { padding: 12px 25px; font-size: 16px; cursor: pointer; border-radius: 5px; text-decoration: none; display: inline-block; }
+        .btn-primary { background-color: #007bff; color: white; border: none; }
+        .summary-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .card { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-align: center; }
+        .card h3 { margin-top: 0; }
+        .card .reading { font-size: 2em; font-weight: bold; color: #0056b3; }
+        .chart-container { width: 100%; max-width: 100%; margin: 0 auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><%= title %></h1>
+            <nav class="nav">
+                <a href="/settings">设置</a>
+                <a href="/logout">登出</a>
+            </nav>
+        </header>
+
+        <div class="main-actions">
+            <a href="/new" class="btn btn-primary">录入新数据</a>
+        </div>
+
+        <div class="summary-cards">
+             <div class="card">
+                <h3>本期总费用 (元)</h3>
+                <p class="reading"><%= totalCost %></p>
+            </div>
+            <div class="card">
+                <h3>最新电表读数</h3>
+                <p class="reading"><%= latestElectricity.reading %></p>
+            </div>
+            <div class="card">
+                <h3>最新冷水读数</h3>
+                <p class="reading"><%= latestColdWater.reading %></p>
+            </div>
+            <div class="card">
+                <h3>最新热水读数</h3>
+                <p class="reading"><%= latestHotWater.reading %></p>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h2>用电趋势</h2>
+            <canvas id="electricityChart"></canvas>
+        </div>
+
+    </div>
+
+    <script>
+        // 解析从后端传来的图表数据
+        // 解析从后端传来的图表数据，如果不存在则提供默认空值
+        const chartData = <%- typeof chartData !== 'undefined' ? chartData : '{ "labels": [], "values": [] }' %>;
+
+        const ctx = document.getElementById('electricityChart').getContext('2d');
+        const electricityChart = new Chart(ctx, {
+            type: 'line', // 线形图
+            data: {
+                labels: chartData.labels,
+                datasets: [{
+                    label: '每日用电量 (度)',
+                    data: chartData.values,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                    tension: 0.1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

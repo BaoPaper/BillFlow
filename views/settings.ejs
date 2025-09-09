@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>价格设置 - 水电用量记录</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .form-container { max-width: 500px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        .btn-secondary { background-color: #6c757d; text-decoration: none; display: inline-block; text-align: center; }
+        .success-message {
+            color: green;
+            background-color: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container form-container">
+        <h1>价格设置</h1>
+
+        <% if (message) { %>
+            <p class="success-message"><%= message %></p>
+        <% } %>
+
+        <form action="/settings" method="post">
+            <div class="form-group">
+                <label for="electricity_per_unit">电价 (元/度)</label>
+                <input type="number" id="electricity_per_unit" name="electricity_per_unit" step="0.01" value="<%= prices.electricity_per_unit %>" required>
+            </div>
+            <div class="form-group">
+                <label for="cold_water_per_unit">冷水价 (元/吨)</label>
+                <input type="number" id="cold_water_per_unit" name="cold_water_per_unit" step="0.01" value="<%= prices.cold_water_per_unit %>" required>
+            </div>
+            <div class="form-group">
+                <label for="hot_water_per_unit">热水价 (元/吨)</label>
+                <input type="number" id="hot_water_per_unit" name="hot_water_per_unit" step="0.01" value="<%= prices.hot_water_per_unit %>" required>
+            </div>
+            <div class="form-group">
+                <label for="settlement_day">每月结算日</label>
+                <input type="number" id="settlement_day" name="settlement_day" min="1" max="28" value="<%= settlement_day %>" required>
+            </div>
+            <button type="submit" class="btn">保存设置</button>
+            <a href="/" class="btn btn-secondary" style="margin-top: 10px;">返回主页</a>
+        </form>
+    </div>
+</body>
+</html>
