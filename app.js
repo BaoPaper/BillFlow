@@ -22,7 +22,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET || 'your-very-secret-key-for-billflow', // 生产环境中应使用环境变量
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true } // 如果使用 HTTPS，应设为 true
+    cookie: { secure: false } // 如果使用 HTTPS，应设为 true
 }));
 
 // 认证中间件
