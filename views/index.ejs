@@ -64,7 +64,7 @@
     <script>
         // 解析从后端传来的图表数据
         // 解析从后端传来的图表数据，如果不存在则提供默认空值
-        const chartData = <%- typeof chartData !== 'undefined' ? chartData : '{ "labels": [], "values": [] }' %>;
+        const chartData = JSON.parse('<%- chartData %>');
 
         const ctx = document.getElementById('electricityChart').getContext('2d');
         const electricityChart = new Chart(ctx, {
@@ -84,6 +84,16 @@
                 scales: {
                     y: {
                         beginAtZero: true
+                    }
+                },
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                plugins: {
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
                     }
                 }
             }

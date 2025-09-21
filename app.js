@@ -81,31 +81,32 @@ app.get('/', isAuthenticated, async (req, res) => {
         };
         
         // --- 按天聚合图表数据 ---
-        if (data.electricity.length > 0) {
-            const dailyUsage = {}; // 使用对象来按天存储数据
+        if (data.electricity.length > 1) { // 至少需要两个读数才能计算用量
+            const dailyTotals = {}; // 使用对象来按天聚合用量
 
-            data.electricity.forEach(record => {
-                const date = new Date(record.timestamp).toISOString().split('T')[0]; // 获取 YYYY-MM-DD 格式的日期
-                if (!dailyUsage[date]) {
-                    dailyUsage[date] = [];
-                }
-                dailyUsage[date].push(record.reading);
-            });
-
-            const sortedDates = Object.keys(dailyUsage).sort();
-
-            for (let i = 0; i < sortedDates.length; i++) {
-                const date = sortedDates[i];
-                const readings = dailyUsage[date];
+            // 假设 data.electricity 已经按时间戳排序
+            for (let i = 1; i < data.electricity.length; i++) {
+                const currentRecord = data.electricity[i];
+                const previousRecord = data.electricity[i-1];
                 
-                if (readings.length > 1) {
-                    const dailyTotal = Math.max(...readings) - Math.min(...readings);
-                    const label = new Date(date).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' });
-                    chartData.labels.push(label);
-                    chartData.values.push(dailyTotal.toFixed(2));
+                const usage = currentRecord.reading - previousRecord.reading;
+                
+                if (usage >= 0) {
+                    const date = new Date(currentRecord.timestamp).toISOString().split('T')[0];
+                    if (!dailyTotals[date]) {
+                        dailyTotals[date] = 0;
+                    }
+                    dailyTotals[date] += usage;
                 }
-                // 如果一天只有一个读数，我们无法计算日用量，所以跳过
             }
+
+            const sortedDates = Object.keys(dailyTotals).sort();
+
+            sortedDates.forEach(date => {
+                const label = new Date(date).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' });
+                chartData.labels.push(label);
+                chartData.values.push(dailyTotals[date].toFixed(2));
+            });
         }
 
         res.render('index', {
